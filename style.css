@@ -1,0 +1,93 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+a.nav-link,
+a.nav-link:visited {
+  font-size: 1rem;
+  font-weight: bolder;
+  color: #e5e5e5;
+  transition: all 0.2s ease-in-out;
+}
+
+a.nav-link:hover {
+  color: #989898;
+}
+
+.navbar {
+  padding: 0.25rem 0.5rem;
+}
+
+ul.writing {
+  list-style: none;
+}
+
+p.lead a:link,
+li.lead a:link,
+.card-body a:link,
+p.lead a:visited,
+li.lead a:visited,
+.card-body a:visited {
+  color: #2a5aa7;
+  font-weight: 600;
+  background-image: linear-gradient(transparent 80%,#dbe4ff 0);
+}
+
+p.lead a:hover,
+li.lead a:hover,
+.card-body a:hover {
+  color: #222;
+  background-image: linear-gradient(transparent 80%,#bac8ff 0);
+  text-decoration: none;
+}
+
+footer a:hover {
+  opacity: 0.5;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.card-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-row-gap: 1.2rem;
+}
+
+.card {
+  transition: .2s ease-in-out;
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.modal-body form,
+.modal-body p {
+  text-align: right;
+}
+
+.modal-body p {
+  font-style: italic;
+}
+
+.badge-primary {
+  background-color: #563d7c;
+}
+
+.badge-warning {
+  background-color: #eddc34;
+}
+
+.badge-info {
+  background-color: #336791;
+}
