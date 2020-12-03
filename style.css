@@ -19,11 +19,30 @@ a.nav-link:visited {
   font-size: 1rem;
   font-weight: bolder;
   color: #e5e5e5;
-  transition: all 0.1s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
-a.nav-link:hover { color: #a5a5a5; }
-a.nav-link:active { transform: scale(0.99); }
+/* fading out siblings on nav link hover */
+.navbar:hover a:not(:hover),
+.navbar:focus-within a:not(:focus) {
+  opacity: 0.6;
+}
+
+.navbar:hover {
+  opacity: 1;
+}
+
+.navbar {
+  pointer-events: none;
+}
+
+.navbar > a {
+  pointer-events: auto;
+}
+
+a.nav-link:active {
+  transform: scale(0.99);
+}
 
 /* styling paragraph and card text */
 p.lead {
@@ -31,22 +50,42 @@ p.lead {
 }
 
 p.lead a:link,
-li.lead a:link,
 .card-body a:link,
 p.lead a:visited,
-li.lead a:visited,
 .card-body a:visited {
   color: #2a5aa7;
   font-weight: 600;
   background-image: linear-gradient(transparent 80%,#dbe4ff 0);
+  transition: 0.4s ease-in-out;
 }
 
 p.lead a:hover,
-li.lead a:hover,
 .card-body a:hover {
   color: #222;
-  background-image: linear-gradient(transparent 80%,#bac8ff 0);
+  background-image: linear-gradient(transparent 80%, #bac8ff 0);
   text-decoration: none;
+}
+
+/* fade out other essay links on hover */
+.writing:hover a:not(:hover),
+.writing:focus-within a:not(:focus) {
+ opacity: 0.4;
+}
+
+.writing:hover {
+ opacity: 1;
+}
+
+.writing {
+ pointer-events: none;
+}
+
+.writing > p > a {
+ pointer-events: auto;
+}
+
+.writing p a:active {
+ transform: scale(0.98);
 }
 
 /* styling cards */
@@ -57,28 +96,40 @@ li.lead a:hover,
 }
 
 .card {
-  /* transition: .1s ease-in-out; */
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  transition: 0.4s ease-in-out;
 }
 
-/* .card:hover {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px, rgba(0, 0, 0, 0.4) 0px 2px 4px;
-} */
+/* fading out other cards on hover */
+.card-deck:hover .card:not(:hover),
+.card-deck:focus-within .card:not(:focus) {
+  opacity: 0.5;
+}
+
+.card-deck:hover {
+  opacity: 1;
+}
+
+.card-deck {
+  pointer-events: none;
+}
+
+.card-deck > .card {
+  pointer-events: auto;
+}
 
 /* styling footer */
-footer a:hover {
-  opacity: 0.5;
-  text-decoration: none;
-  transition: all 0.1s ease-in-out;
-}
-
-.footer {
+.sticky-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
 }
 
-/* extra */
-.badge-primary { background-color: #563d7c; }
-.badge-warning { background-color: #eddc34; }
-.badge-info { background-color: #336791; }
+footer a:hover {
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+::selection {
+  background-color: rgba(146, 216, 222, 0.6);
+}
