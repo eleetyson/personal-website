@@ -105,13 +105,13 @@ span.date {
 
 .card {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  transition: 0.4s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 /* fading out other cards on hover */
 .card-deck:hover .card:not(:hover),
 .card-deck:focus-within .card:not(:focus) {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .card-deck:hover {
