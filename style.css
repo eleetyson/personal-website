@@ -18,6 +18,12 @@ main {
   padding: 0.25rem 0.5rem;
 }
 
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0.1rem 0;
+  }
+}
+
 a.nav-link,
 a.nav-link:visited {
   font-size: 1rem;
@@ -49,9 +55,15 @@ a.nav-link:active {
 }
 
 /* styling paragraph and card text */
-p.lead {
+.home h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.home p.lead {
   padding-bottom: 0.4rem;
-  font-weight: 300;
+  font-weight: 350;
+  font-size: 1.2rem;
 }
 
 p.lead a:link,
@@ -61,7 +73,7 @@ p.lead a:visited,
   color: #2a5aa7;
   font-weight: 600;
   background-image: linear-gradient(transparent 80%,#dbe4ff 0);
-  transition: 0.4s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 p.lead a:hover,
@@ -95,7 +107,6 @@ span.date {
   letter-spacing: .02rem;
 }
 
-
 /* styling cards */
 .card-deck {
   display: grid;
@@ -108,22 +119,8 @@ span.date {
   transition: 0.2s ease-in-out;
 }
 
-/* fading out other cards on hover */
-.card-deck:hover .card:not(:hover),
-.card-deck:focus-within .card:not(:focus) {
-  opacity: 0.75;
-}
-
-.card-deck:hover {
-  opacity: 1;
-}
-
-.card-deck {
-  pointer-events: none;
-}
-
-.card-deck > .card {
-  pointer-events: auto;
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px, rgba(0, 0, 0, 0.4) 0px 1px 2px;
 }
 
 /* styling footer */
@@ -140,5 +137,5 @@ footer a:hover {
 
 /* styling text highlight selection */
 ::selection {
-  background-color: rgba(146, 216, 222, 0.4);
+  background-color: rgba(179, 212, 251, 0.6);
 }
