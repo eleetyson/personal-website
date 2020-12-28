@@ -123,6 +123,64 @@ span.date {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px, rgba(0, 0, 0, 0.4) 0px 1px 2px;
 }
 
+/* styling writing */
+div.post {
+  font-size: 0.825rem;
+  margin-top: 2.5rem;
+}
+
+em.updated,
+em.description {
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  margin-left: 2px;
+}
+
+em.updated {
+  color: grey;
+}
+
+div.post a:link,
+div.post a:visited {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(55, 53, 47, 0.4);
+  opacity: 0.7;
+}
+
+div.post a:hover {
+  text-decoration-color: rgba(55, 53, 47, 0.8);
+}
+
+div.post a.link-back:link {
+  text-decoration: none;
+}
+
+blockquote.blockquote {
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  border-left: 3px solid black;
+  line-height: 1.65rem;
+}
+
+div.post hr.divider {
+  margin: 2rem 0;
+}
+
+iframe.podcast {
+  height: 10rem;
+  border: none;
+}
+
+details > summary {
+  outline: none;
+  padding-bottom: 0.5rem;
+}
+
+details > ul {
+  line-height: 1.5rem;
+}
+
 /* styling footer */
 .sticky-footer {
   position: absolute;
