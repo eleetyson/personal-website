@@ -30,7 +30,7 @@
         <em class="updated">last updated 12/6/20</em>
         <br><br>
 
-        <p><a href="https://jestjs.io/">Jest</a> is one of the most common JavaScript testing frameworks. Most of this post will be a simple introduction to using it but before that, briefly, here's my case for why tests are worth your time.</p>
+        <p><a href="https://jestjs.io/" target="_blank">Jest</a> is one of the most common JavaScript testing frameworks. Most of this post will be a simple introduction to using it but before that, briefly, here's my case for why tests are worth your time.</p>
         <p>Test-driven development (TDD) is an approach to building software where you write tests for new features before building them. </p>
         <p>The first benefit is structural. With a large codebase, it's critical that additions and revisions don't break everything else.</p>
         <p>The second benefit is psychological. As human beings, we're really bad at multitasking. At both a physical and cognitive level, divided focus impairs our ability to do anything well.</p>
@@ -178,7 +178,7 @@ const matchSubstrings = require('./matchedSubstrings')
         </code></pre>
         <br>
         <p>Back to our first test block. We're checking whether the return value of <code>expect()</code> — which will be the return value of <code>matchSubstrings()</code> when passed two strings <code>'te'</code> and <code>'test'</code> — is equal to an array <code>['t', 'te', 'e']</code>.</p>
-        <p>The <code>toEqual()</code> function (more on this <a href="https://jestjs.io/docs/en/expect#toequalvalue">here</a>) compares all properties between objects. In this case, it's comparing whether our two arrays contain the same elements. If <code>matchSubstrings(str1, str2)</code> returns an array with substrings <code>'t', 'te', 'e'</code>, <code>toEqual()</code> returns true and our first test passes.</p>
+        <p>The <code>toEqual()</code> function (more on this <a href="https://jestjs.io/docs/en/expect#toequalvalue" target="_blank">here</a>) compares all properties between objects. In this case, it's comparing whether our two arrays contain the same elements. If <code>matchSubstrings(str1, str2)</code> returns an array with substrings <code>'t', 'te', 'e'</code>, <code>toEqual()</code> returns true and our first test passes.</p>
         <pre><code class="lang-js">
 // practice/matched-substrings-js/matchedSubstrings.test.js
 const matchSubstrings = require('./matchedSubstrings')
