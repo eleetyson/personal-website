@@ -5,9 +5,10 @@
     <link rel="icon" href="../img/favicon.png" type="text/css">
     <meta name="viewport" content="width=device-width", initial-scale=1, shrink-to-fit=no>
     <meta name="description" content="You found Ethan Lee-Tyson.">
-    <title>friction</title>
+    <title>simple animations in React</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="../style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"/>
   </head>
   <body>
     <nav class="navbar bg-dark">
@@ -23,28 +24,118 @@
         <a class="link-back" href="/writing">« Back</a>
         <br><br>
 
-        <h1>🐭</h1>
-        <h3>friction</h3>
-        <em class="description">on product design</em><br>
-        <em class="updated">last updated 7/31/20</em>
+        <h1>💨</h1>
+        <h3>simple animations in React</h3>
+        <em class="description">on programming</em><br>
+        <em class="updated">last updated 11/30/20</em>
         <br><br>
 
-        <p>Friction is frustrating. It's that spotty internet connection, line at the DMV, conversation we'll just put off until tomorrow type feeling.</p>
-        <p>And so we usually avoid it. We choose the path of least resistance. You could argue that Tinder and Grubhub are not innovative — online dating and food delivery have been around for a while now — but that they are simply better at catering to our laziness.</p>
-        <p>While I'm grateful these services exist, I can't help but wonder whether their tactics could be applied to other domains for greater impact. </p>
+        <p>There are plenty of ways to add page transitions to a React application, this tutorial outlines a really simple one. It requires minimal effort but can make your single page app look a lot more professional.</p>
         <hr class="divider">
-        <p>Calm is a great example. Founded by two serial entrepreneurs, the popular meditation aid is one of few popular mobile apps with <a href="https://www.weforum.org/agenda/2018/04/do-the-mobile-apps-we-use-the-most-make-us-unhappy/">predominantly happy users</a>. </p>
-        <p>It's the rare business that has aligned its own incentives with customer well-being: increased usage is healthier for users and the company's bottom line. Calm didn't invent meditation. They're simply better at packaging up meditation in an attractive, frictionless way.</p>
-        <p><a href="http://repl.it">Repl.it</a> is tackling a hairier problem.</p>
-        <p>Setting up a text editor like VSCode, let alone an entire development environment, is hard. Following a painstakingly detailed guide from my coding bootcamp, it still took me two hours and plenty of wrong turns before finally getting squared away.</p>
-        <p>With Repl.it, you can start writing code in about ten seconds. No need for a complicated environment or even to create an account with them.</p>
-        <p>While engineering managers need their people to use something more powerful, Repl.it is perfect for beginners. And in my opinion, that’s where there's an enormous opportunity for positive impact.</p>
-        <p>Many industries would benefit from a larger supply of talented engineers. An enormous bottleneck here is the volume of people who choose to learn how to code in the first place. When fewer people try, even fewer develop baseline proficiency, and even fewer ultimately reach a hireable level of competency. Beginnings are the bottleneck.</p>
-        <p>Trying something new is always difficult. There will be a lot more people who make this choice, who choose to begin learning how to code, if beginning is just a little easier. And Repl.it makes beginning a little easier.</p>
+        <p>Before we get into animations for the different routes, we'll build a fade-in transition for our initial page load. This is pretty simple with the CSS <code>animation</code> property.</p>
+        <pre><code class="language-css">
+/* your-app/src/App.css */
+body {
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+        </code></pre>
+        <br>
+        <p>Let's unpack that first ruleset. We're using a shorthand property instead of 3 separate declarations in the same block.</p>
+        <pre><code class="language-css">
+/* option a */
+body {
+  animation-name: fadeIn; /* specifying the name of our @keyframes animation */
+  animation-duration: 1s; /* which should take 1 second to complete */
+  animation-timing-function: ease; /* and start slowly, speed up, and finish slowly */
+}
+
+/* option b */
+body {
+  animation: fadeIn 1s ease; /* equivalent, much more concise declaration */
+}
+        </code></pre>
+        <br>
+        <p>So we're binding our selector —<code>body</code>, the whole page — to this animation <code>fadeIn</code> which has 2 keyframes.</p>
+        <p>Keyframes are basically checkpoints in the life of a CSS animation. We're only setting two of them here, indicating that we want to begin the animation with opacity set to 0 and end it with opacity set to 1.</p>
+        <pre><code class="language-css">
+@keyframes fadeIn {
+  0% { opacity: 0; } // from
+  100% { opacity: 1; } // to
+}
+        </code></pre>
+        <br>
+        <p>Tying the animation and keyframes declarations together, here's how we can interpret the code below in plain English:</p>
+        <ul>
+          <li>We're applying an animation called <code>fadeIn</code> to the entire page <code>body</code> on initial page load.</li>
+          <li>The page will start out as completely transparent with opacity set to 0.</li>
+          <li>Opacity will increase slowly, then more quickly, and slowly again until it finally reaches a value of 1. The page will finally be completely visible.</li>
+          <li>This transition will occur over the span of one second.</li>
+        </ul>
+        <pre><code class="language-css">
+/* your-app/src/App.css */
+body {
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+        </code></pre>
+        <br>
+        <p>Adding these seven lines of code to our stylesheet, we now have a fade-in transition on initial page load. Let's finish up with some transitions between our child routes. </p>
         <hr class="divider">
-        <p>Websites and apps are tiny worlds. In contrast to our messy, unpredictable lives, every last detail of these digital environments can be curated to direct users' actions.</p>
-        <p>This power comes with the responsibility to consider how we're designing such environments and what actions we're incentivizing.</p>
-        <p>What would the world look like if wellness and education were addictive? Users deserve to be treated not as lab rats or cash cows, but as people.</p>
+        <p>First, head over to the <code>react-fader</code> package <a href="https://github.com/jcoreio/react-fader">documentation</a> and spend a few minutes reading through it.</p>
+        <p>In one of the code snippets provided, we see that the <code>TransitionSwitch</code> component from the <code>react-router-transition-switch</code> package can replace a <code>Switch</code> component.</p>
+        <pre><code class="language-js">
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import TransitionSwitch from 'react-router-transition-switch'
+import Fader from 'react-fader'
+
+&lt;Router&gt
+  &lt;TransitionSwitch component={Fader}&gt;
+    &lt;Route path="/red" component={Red}/&gt;
+    &lt;Route path="/green" component={Green} /&gt;
+    &lt;Route path="/blue" component={Blue} /&gt;
+  &lt;/TransitionSwitch&gt;
+&lt;Router&gt;
+        </code></pre>
+        <br>
+        <p>We needed to swap in the <code>TransitionSwitch</code> component so that we can pass it a prop: our <code>Fader</code> component. On transitions between routes, this will fade out the old route's children and fade in those for the new one.</p>
+        <pre><code class="language-js">
+/* here's how I implemented this in my React app */
+import './App.css'
+import Navbar from './components/Navbar'
+import { Route } from 'react-router-dom'
+import TransitionSwitch from 'react-router-transition-switch'
+import Fader from 'react-fader'
+import Generator from './containers/Generator'
+import IdeasIndex from './containers/IdeasIndex'
+import About from './containers/About'
+
+const App = () =&gt; {
+  return (
+    &lt;div className="App"&gt;
+      &lt;Navbar /&gt;
+      &lt;TransitionSwitch component={Fader}&gt;
+        &lt;Route exact path="/"&gt; &lt;Generator /&gt; &lt;/Route&gt;
+        &lt;Route exact path="/all"&gt; &lt;IdeasIndex /&gt; &lt;/Route&gt;
+        &lt;Route exact path="/about"&gt; &lt;About /&gt; &lt;/Route&gt;
+      &lt;/TransitionSwitch&gt;
+    &lt;/div&gt;
+  )
+
+}
+
+export default App
+        </code></pre>
+        <br>
+        <p>I think the default settings look really clean but feel free to play with some of the other props detailed in the docs. Hope this helps :)</p>
       </div>
     </main>
 
@@ -59,6 +150,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/mailgo@0.9.18/dist/mailgo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
   <script>$(function() {$('[data-toggle="tooltip"]').tooltip()})</script>
   </body>
 </html>

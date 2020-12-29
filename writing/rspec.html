@@ -5,9 +5,10 @@
     <link rel="icon" href="../img/favicon.png" type="text/css">
     <meta name="viewport" content="width=device-width", initial-scale=1, shrink-to-fit=no>
     <meta name="description" content="You found Ethan Lee-Tyson.">
-    <title>friction</title>
+    <title>testing with RSpec</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="../style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"/>
   </head>
   <body>
     <nav class="navbar bg-dark">
@@ -23,28 +24,161 @@
         <a class="link-back" href="/writing">« Back</a>
         <br><br>
 
-        <h1>🐭</h1>
-        <h3>friction</h3>
-        <em class="description">on product design</em><br>
-        <em class="updated">last updated 7/31/20</em>
+        <h1>🧪</h1>
+        <h3>testing with RSpec</h3>
+        <em class="description">on programming</em><br>
+        <em class="updated">last updated 12/10/20</em>
         <br><br>
 
-        <p>Friction is frustrating. It's that spotty internet connection, line at the DMV, conversation we'll just put off until tomorrow type feeling.</p>
-        <p>And so we usually avoid it. We choose the path of least resistance. You could argue that Tinder and Grubhub are not innovative — online dating and food delivery have been around for a while now — but that they are simply better at catering to our laziness.</p>
-        <p>While I'm grateful these services exist, I can't help but wonder whether their tactics could be applied to other domains for greater impact. </p>
-        <hr class="divider">
-        <p>Calm is a great example. Founded by two serial entrepreneurs, the popular meditation aid is one of few popular mobile apps with <a href="https://www.weforum.org/agenda/2018/04/do-the-mobile-apps-we-use-the-most-make-us-unhappy/">predominantly happy users</a>. </p>
-        <p>It's the rare business that has aligned its own incentives with customer well-being: increased usage is healthier for users and the company's bottom line. Calm didn't invent meditation. They're simply better at packaging up meditation in an attractive, frictionless way.</p>
-        <p><a href="http://repl.it">Repl.it</a> is tackling a hairier problem.</p>
-        <p>Setting up a text editor like VSCode, let alone an entire development environment, is hard. Following a painstakingly detailed guide from my coding bootcamp, it still took me two hours and plenty of wrong turns before finally getting squared away.</p>
-        <p>With Repl.it, you can start writing code in about ten seconds. No need for a complicated environment or even to create an account with them.</p>
-        <p>While engineering managers need their people to use something more powerful, Repl.it is perfect for beginners. And in my opinion, that’s where there's an enormous opportunity for positive impact.</p>
-        <p>Many industries would benefit from a larger supply of talented engineers. An enormous bottleneck here is the volume of people who choose to learn how to code in the first place. When fewer people try, even fewer develop baseline proficiency, and even fewer ultimately reach a hireable level of competency. Beginnings are the bottleneck.</p>
-        <p>Trying something new is always difficult. There will be a lot more people who make this choice, who choose to begin learning how to code, if beginning is just a little easier. And Repl.it makes beginning a little easier.</p>
-        <hr class="divider">
-        <p>Websites and apps are tiny worlds. In contrast to our messy, unpredictable lives, every last detail of these digital environments can be curated to direct users' actions.</p>
-        <p>This power comes with the responsibility to consider how we're designing such environments and what actions we're incentivizing.</p>
-        <p>What would the world look like if wellness and education were addictive? Users deserve to be treated not as lab rats or cash cows, but as people.</p>
+        <p>Writing test coverage is the programming equivalent of eating vegetables. We usually don't want to but know that we should.</p>
+        <p>Let's pick up where we left off in the <a href="https://www.notion.so/testing-with-Jest-df50e37d69d143db8d01ff1989d72c1d">previous post</a>. As a refresher, our problem was to find all matching substrings between any two given strings. We also made a few assumptions:</p>
+        <ul>
+          <li>given two strings with matches, our return value should be an array of all matching substrings</li>
+          <li>given two strings with no matching substrings, our return value should be <code>false</code></li>
+          <li>the given strings won't contain any spaces or special characters</li>
+          <li>casing doesn't matter</li>
+        </ul>
+        <p>This was the simple structure we built out for our JavaScript solution and corresponding test cases. </p>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fcae8a42-aa09-40b8-a07b-7070ebff6af6/jestTests.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T152427Z&X-Amz-Expires=86400&X-Amz-Signature=32b1762fb6e3d74a349797e3ab4997112a4f98b4d9d3834276642bf165920946&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22jestTests.png%22" class="w-100" alt="Previous post test output">
+        </figure>
+        <br>
+        <p>Using a similar structure, we're going to solve that same problem but with Ruby and RSpec test coverage instead.</p>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f61bb8c4-acae-4fa2-bfd9-5df0b31dcd8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T152629Z&X-Amz-Expires=86400&X-Amz-Signature=c36f087280e62b26c36d5f8add1870c127c39907c732b4c683a2be79130d2b88&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Preview RSpec test output">
+        </figure>
+        <br>
+        <p>Like Jest is for JavaScript, RSpec is a popular testing framework for applications written in Ruby. To get started, we'll run <code>rspec --init</code> from our top-level directory.</p>
+        <pre><code class="lang-rb">
+cd practice
+rspec --init
+        </code></pre>
+        <br>
+        <p>This generates a <code>spec</code> directory containing a <code>spec_helper.rb</code> file — neither of which we need to touch. More importantly, we also now have a <code>.rspec</code> file to configure our test settings. Let's toggle RSpec's output format because the default setting doesn't offer much context.</p>
+        <pre><code class="lang-rb">
+# practice/.rspec
+--require spec_helper # this is included by default (which we need)
+--format documentation # adding this to display test descriptions upon execution
+        </code></pre>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ea0ac3c-7697-4312-a5fe-1882a43e395f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T153727Z&X-Amz-Expires=86400&X-Amz-Signature=2a80555524a8513319e5e923549da3a8c77f0e8e99f457be0502474b7134b206&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="RSpec tests without context">
+          <figcaption class="figure-caption">This is our test output if we don't include <code>--format documentation</code> in <code>.rspec</code></figcaption>
+        </figure>
+        <br>
+        <p>Now we're able to start writing our tests. We can copy over test descriptions from our JavaScript directory, but we'll obviously need to tweak the syntax.</p>
+        <pre><code class="lang-rb">
+mkdir matched-substrings-rb
+cd matched-substrings-rb
+touch matched_substrings.rb # a file for solving our problem
+touch matched_substrings_spec.rb # a file to test that solution
+
+# practice/matched-substrings-rb/matched_substrings_spec.rb
+require_relative '../spec/spec_helper.rb'
+require_relative './matched_substrings.rb'
+
+describe 'match substrings' do
+  test = Solution.new
+
+  it 'takes two strings and returns all matching substrings' do
+    expect(test.match('te', 'test')).to eq ['t', 'te', 'e']
+  end
+
+  it "order of strings passed should not matter" do
+    expect(test.match('test', 'te')).to eq ['t', 'te', 'e']
+  end
+
+  it "returns case-insensitive matches" do
+    expect(test.match('TE', 'test')).to eq(['t', 'te', 'e'])
+  end
+
+  it "returns false when given strings with no matching substrings" do
+    expect(test.match('no', 'match')).to eq false
+  end
+end
+        </code></pre>
+        <p>Those first two lines are pretty straightforward: we're just loading a helper for our tests and then the file with our solution code.</p>
+        <p>The <code>describe</code> method nests related tests in an 'example group'. Whatever argument we pass to <code>describe</code> will ultimately appear as a header in our terminal upon test execution.</p>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/394c6bf4-3097-4da1-ad86-b381cbdae3cb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T154300Z&X-Amz-Expires=86400&X-Amz-Signature=acd6c195e8c24e7e48020adc19103e6890b2437f5ae8beb8ab88bdc53f31324a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Example test output using 'describe'">
+          <figcaption class="figure-caption">a quick note: <code>describe 'match substrings' do</code> is equivalent to <code>describe('match substrings') do</code></figcaption>
+        </figure>
+        <br>
+        <p>This brings us to our solution code. Performance and elegance aside, we have a simple <code>Solution</code> class defined with a <code>#match</code> method that will handle the substring matching process.</p>
+        <pre><code class="lang-rb">
+# practice/matched-substrings-rb/matched_substrings.rb
+class Solution
+  def match(str1, str2)
+    matches = []
+    s1 = str1.downcase
+    s2 = str2.downcase
+
+# iterate over each substring in the first string
+  # ex. given "test":
+  #   first outer loop: "t", "te", "tes", "test"
+  #   second outer loop: "e", "es", "est"...
+# if the 2nd string doesn't include the substring and the substring isn't in the array yet, add it
+    (0...s1.length).each do |i|
+      (i...s1.length).each do |j|
+        substring = s1[i..j]
+        if s2.include?(substring) &amp;&amp; !matches.include?(substring)
+          matches &lt;&lt; substring
+        end
+      end
+    end
+
+    return !matches.empty? ? matches : false
+  end
+end
+        </code></pre>
+        <br>
+        <p>Because we've loaded this solution file back in our test file, we can instantiate new instances of this <code>Solution</code> class and invoke its <code>#match</code> method for test cases.</p>
+        <pre><code class="lang-rb">
+require_relative '../spec/spec_helper.rb'
+require_relative './matched_substrings.rb' # loading our solution file
+
+describe 'match substrings' do
+  test = Solution.new # instantiating a new Solution instance to use its #match method
+    ...
+end
+        </code></pre>
+        <br>
+        <p>Similar to <code>describe</code>, the argument we pass to <code>it</code> will display in our terminal as context for the test contained in its subsequent block. </p>
+        <p>For that block, we're calling <code>expect()</code> and then <code>to()</code> on that result, finally using <code>eq</code> to check whether their return values are equivalent. <code>eq</code> is RSpec's version of <code>==</code>.</p>
+        <pre><code class="lang-rb">
+test = Solution.new
+
+it 'takes two strings and returns all matching substrings' do
+  expect(test.match('te', 'test')).to eq ['t', 'te', 'e']
+end
+
+# expect().to()
+
+# expect()
+# passing expect() an argument of...
+# an instance of Solution and calling #match, passing two strings, on that instance
+expect(test.match('te', 'test'))
+
+# .to()
+.to eq(['t', 'te', 'e'])
+        </code></pre>
+        <br>
+        <p>Again, <code>describe</code> is for describing what we're testing and <code>it</code> is for explaining what those results should be. <code>expect</code> and <code>to</code> are both methods that we can use with RSpec's matchers — <code>eq</code> is just one of them — in comparing actual results to expectations.</p>
+        <p>After following a similar process for our other three test cases, we can run them all from the top-level <code>practice</code> directory.</p>
+        <pre><code class="lang-rb">
+# rspec &lt;directory&gt;/&lt;file_with_test_cases&gt;
+rspec matched-substrings-rb/matched_substrings_spec.rb
+        </code></pre>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7c529e29-034c-4bfd-92cb-784696f15e85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T155219Z&X-Amz-Expires=86400&X-Amz-Signature=bd1534eb821916a137dd407c617cbdaa89316d5fc2d438973506390edb15a9f3&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 400px; width: 85%;" alt="failing test cases">
+          <figcaption class="figure-caption">red for failed test cases</code></figcaption>
+        </figure>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/678365e1-187d-4e23-a142-67b3c6957d6c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T155515Z&X-Amz-Expires=86400&X-Amz-Signature=ec9bcca9d3de3c0986b50354f3625d66577112988279e16a262cd0b1a6a047de&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 250px; width: 70%;" alt="passing test cases">
+          <figcaption class="figure-caption">green means we're all good</code></figcaption>
+        </figure>
+        <br>
+        <p>RSpec is capable of way more than what we're using it for here so whether you want to review these basics or go deeper, <a href="https://relishapp.com/rspec">their documentation</a> can help. Minitest, Capybara, and Cucumber are all viable alternatives too.</p>
+        <p>Thanks for reading and again, feel free to use <a href="https://github.com/eleetyson/practice">my repo</a> as a point of reference.</p>
       </div>
     </main>
 
@@ -59,6 +193,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/mailgo@0.9.18/dist/mailgo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
   <script>$(function() {$('[data-toggle="tooltip"]').tooltip()})</script>
   </body>
 </html>

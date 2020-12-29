@@ -172,13 +172,39 @@ iframe.podcast {
   border: none;
 }
 
+figure > figcaption.figure-caption {
+  margin: 5px 0 0 2px;
+  font-size: 0.7rem;
+}
+
+@media screen and (max-width: 768px) {
+  figure > img {
+    height: 7rem;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  figure > img {
+    height: 9.5rem;
+    width: 100%;
+  }
+}
+
+code {
+  margin: 0 1px;
+  padding: 2px;
+  background-color: rgba(55, 53, 47, 0.05);
+}
+
 details > summary {
   outline: none;
   padding-bottom: 0.5rem;
 }
 
+div.post ul,
 details > ul {
   line-height: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 /* styling footer */

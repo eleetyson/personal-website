@@ -5,9 +5,10 @@
     <link rel="icon" href="../img/favicon.png" type="text/css">
     <meta name="viewport" content="width=device-width", initial-scale=1, shrink-to-fit=no>
     <meta name="description" content="You found Ethan Lee-Tyson.">
-    <title>friction</title>
+    <title>testing with Jest</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="../style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"/>
   </head>
   <body>
     <nav class="navbar bg-dark">
@@ -23,28 +24,181 @@
         <a class="link-back" href="/writing">« Back</a>
         <br><br>
 
-        <h1>🐭</h1>
-        <h3>friction</h3>
-        <em class="description">on product design</em><br>
-        <em class="updated">last updated 7/31/20</em>
+        <h1>🃏</h1>
+        <h3>testing with Jest</h3>
+        <em class="description">on programming</em><br>
+        <em class="updated">last updated 12/6/20</em>
         <br><br>
 
-        <p>Friction is frustrating. It's that spotty internet connection, line at the DMV, conversation we'll just put off until tomorrow type feeling.</p>
-        <p>And so we usually avoid it. We choose the path of least resistance. You could argue that Tinder and Grubhub are not innovative — online dating and food delivery have been around for a while now — but that they are simply better at catering to our laziness.</p>
-        <p>While I'm grateful these services exist, I can't help but wonder whether their tactics could be applied to other domains for greater impact. </p>
+        <p><a href="https://jestjs.io/">Jest</a> is one of the most common JavaScript testing frameworks. Most of this post will be a simple introduction to using it but before that, briefly, here's my case for why tests are worth your time.</p>
+        <p>Test-driven development (TDD) is an approach to building software where you write tests for new features before building them. </p>
+        <p>The first benefit is structural. With a large codebase, it's critical that additions and revisions don't break everything else.</p>
+        <p>The second benefit is psychological. As human beings, we're really bad at multitasking. At both a physical and cognitive level, divided focus impairs our ability to do anything well.</p>
+        <p>As it applies to programming, TDD separates planning from implementation. We turn ourselves into worse programmers when we take on both at once. Similar to pseudocoding, describe the code you want (tests) and then actually write it.</p>
         <hr class="divider">
-        <p>Calm is a great example. Founded by two serial entrepreneurs, the popular meditation aid is one of few popular mobile apps with <a href="https://www.weforum.org/agenda/2018/04/do-the-mobile-apps-we-use-the-most-make-us-unhappy/">predominantly happy users</a>. </p>
-        <p>It's the rare business that has aligned its own incentives with customer well-being: increased usage is healthier for users and the company's bottom line. Calm didn't invent meditation. They're simply better at packaging up meditation in an attractive, frictionless way.</p>
-        <p><a href="http://repl.it">Repl.it</a> is tackling a hairier problem.</p>
-        <p>Setting up a text editor like VSCode, let alone an entire development environment, is hard. Following a painstakingly detailed guide from my coding bootcamp, it still took me two hours and plenty of wrong turns before finally getting squared away.</p>
-        <p>With Repl.it, you can start writing code in about ten seconds. No need for a complicated environment or even to create an account with them.</p>
-        <p>While engineering managers need their people to use something more powerful, Repl.it is perfect for beginners. And in my opinion, that’s where there's an enormous opportunity for positive impact.</p>
-        <p>Many industries would benefit from a larger supply of talented engineers. An enormous bottleneck here is the volume of people who choose to learn how to code in the first place. When fewer people try, even fewer develop baseline proficiency, and even fewer ultimately reach a hireable level of competency. Beginnings are the bottleneck.</p>
-        <p>Trying something new is always difficult. There will be a lot more people who make this choice, who choose to begin learning how to code, if beginning is just a little easier. And Repl.it makes beginning a little easier.</p>
-        <hr class="divider">
-        <p>Websites and apps are tiny worlds. In contrast to our messy, unpredictable lives, every last detail of these digital environments can be curated to direct users' actions.</p>
-        <p>This power comes with the responsibility to consider how we're designing such environments and what actions we're incentivizing.</p>
-        <p>What would the world look like if wellness and education were addictive? Users deserve to be treated not as lab rats or cash cows, but as people.</p>
+        <p>So we'll create a directory to hold a bunch of different practice problems, not just the example we're walking though below. Next, we can generate a <code>package.json</code> file and install Jest. The subsequent <code>package.json</code> file should look similar to what's below.</p>
+        <pre><code class="lang-js">
+mkdir practice
+cd practice
+npm init -y // creating a package.json file with default values
+npm install --save-dev jest // installing Jest
+
+// practice/package.json
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
+  },
+  "keywords": [],
+  "author": "Ethan Lee-Tyson &lt;eleetyson@gmail.com&gt;",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
+        </code></pre>
+        <br>
+        <p>We only need to edit the key-value pair for the <code>scripts</code> property so that once we've written tests, we're able to run them.</p>
+        <pre><code class="lang-js">
+// practice/package.json
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    **"test": "jest"**
+  },
+  "keywords": [],
+  "author": "Ethan Lee-Tyson &lt;eleetyson@gmail.com&gt;",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
+        </code></pre>
+        <br>
+        <p>Now we'll write our tests. Here's how that might look for an example problem: find all matching substrings between two strings. We want to test our solution in a file separate from that solution.</p>
+        <pre><code class="lang-js">
+mkdir matched-substrings-js
+cd matched-substrings-js
+touch matchedSubstrings.js // a file for solving our problem
+touch matchedSubstrings.test.js // a file to test that solution
+        </code></pre>
+        <br>
+        <p>With our problem, we can also make a few assumptions to simplify things:</p>
+        <ul>
+          <li>given two strings with matches, our return value should be an array of all matching substrings</li>
+          <li>given two strings with no matching substrings, our return value should be <code>false</code></li>
+          <li>the given strings won't contain any spaces or special characters</li>
+          <li>casing doesn't matter</li>
+        </ul>
+        <p>Let's write a few tests describing how our solution should work in order to fit these assumptions.</p>
+        <pre><code class="lang-js">
+// practice/matched-substrings-js/matchedSubstrings.test.js
+const matchSubstrings = require('./matchedSubstrings')
+
+test('takes two strings and returns all matching substrings', () =&gt; {
+  const str1 = 'te'
+  const str2 = 'test'
+  expect(matchSubstrings(str1, str2)).toEqual(['t', 'te', 'e'])
+})
+
+test('order of strings passed should not matter', () =&gt; {
+  const str1 = 'test'
+  const str2 = 'te'
+  expect(matchSubstrings(str1, str2)).toEqual(['t', 'te', 'e'])
+})
+
+test('returns case-insensitive matches', () =&gt; {
+  const str1 = 'TE'
+  const str2 = 'test'
+  expect(matchSubstrings(str1, str2)).toEqual(['t', 'te', 'e'])
+})
+
+test('returns false when given strings with no matching substrings', () =&gt; {
+  const str1 = 'no'
+  const str2 = 'match'
+  expect(matchSubstrings(str1, str2)).toBe(false)
+})
+        </code></pre>
+        <br>
+        <p>Ignore that first line for now. We have four tests our solution should pass. Their syntax actually reads a lot like plain English; the first block seems to be checking that, given strings <code>'te'</code> and <code>'test'</code>, our solution function returns an array <code>['t', 'te', 'e']</code>.</p>
+        <p>We pass the <code>test()</code> function a name for our test and an anonymous arrow function containing our expectations for that test. We also define a pair of strings that we'll pass to our solution function as arguments.</p>
+        <p>The third line in our test block is the most important:</p>
+        <pre><code class="lang-js">
+test('takes two strings and returns all matching substrings', () =&gt; {
+  const str1 = 'te'
+  const str2 = 'test'
+  expect(matchSubstrings(str1, str2)).toEqual(['t', 'te', 'e'])
+})
+        </code></pre>
+        <br>
+        <p>When we call <code>expect()</code>, we pass it a different function as an argument: <code>matchSubstrings()</code>. This is our solution function from the solution file — we're checking whether it returns what we want it to. Here's one way we could have written that.</p>
+        <pre><code class="lang-js">
+// practice/matched-substrings-js/matchedSubstrings.js
+function matchSubstrings(str1, str2) {
+  const substrings = []
+  const s1 = str1.toLowerCase()
+  const s2 = str2.toLowerCase()
+
+  // iterate over each substring in the 1st string
+  // if the 2nd string doesn't include the substring and the substring isn't in the array yet, add it
+  for (let i = 0; i &lt; str1.length; i++) {
+    for (let j = i + 1; j &lt;= str1.length; j++) {
+      let substr = s1.slice(i, j)
+      if (s2.includes(substr) &amp;&amp; !substrings.includes(substr)) {
+        substrings.push(substr)
+      }
+    }
+  }
+
+  return substrings.length !== 0 ? substrings : false
+}
+
+module.exports = matchSubstrings
+        </code></pre>
+        <br>
+        <p>Let's focus on that last line. We're exporting our solution function so that we can import it in our test file and call it in test blocks.</p>
+        <pre><code class="lang-js">
+// practice/matchedSubstrings/matchedSubstrings.js
+function matchSubstrings(str1, str2) {
+    ...
+    return substrings.length !== 0 ? substrings : false
+}
+
+module.exports = matchSubstrings
+
+// practice/matchedSubstrings/matchedSubstrings.test.js
+const matchSubstrings = require('./matchedSubstrings')
+...
+        </code></pre>
+        <br>
+        <p>Back to our first test block. We're checking whether the return value of <code>expect()</code> — which will be the return value of <code>matchSubstrings()</code> when passed two strings <code>'te'</code> and <code>'test'</code> — is equal to an array <code>['t', 'te', 'e']</code>.</p>
+        <p>The <code>toEqual()</code> function (more on this <a href="https://jestjs.io/docs/en/expect#toequalvalue">here</a>) compares all properties between objects. In this case, it's comparing whether our two arrays contain the same elements. If <code>matchSubstrings(str1, str2)</code> returns an array with substrings <code>'t', 'te', 'e'</code>, <code>toEqual()</code> returns true and our first test passes.</p>
+        <pre><code class="lang-js">
+// practice/matched-substrings-js/matchedSubstrings.test.js
+const matchSubstrings = require('./matchedSubstrings')
+
+test('takes two strings and returns all matching substrings', () =&gt; {
+  const str1 = 'te'
+  const str2 = 'test'
+  expect(matchSubstrings(str1, str2)).toEqual(['t', 'te', 'e'])
+})
+        </code></pre>
+        <br>
+        <p>Finally, we're able to run this test file from our top-level <code>practice</code> directory.</p>
+        <pre><code class="lang-js">
+npm test -- matchedSubstrings.test
+        </code></pre>
+        <figure>
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fcae8a42-aa09-40b8-a07b-7070ebff6af6/jestTests.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T150834Z&X-Amz-Expires=86400&X-Amz-Signature=b660dcfc73e66b10b9c3d58a7fcb240b19e1527755c8143f6971120e5bc9d081&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22jestTests.png%22" class="w-100" alt="Test output">
+        </figure>
+        <br>
+        <p>Every programming language has its own set of testing frameworks (ex. RSpec and MiniTest in Ruby), but that's for a separate post. Feel free to use <a href="https://github.com/eleetyson/practice">my repo</a> as a point of reference and check out the <a href="https://jestjs.io/en/">Jest docs</a> if you want to learn more. Until next time 👋</p>
       </div>
     </main>
 
@@ -59,6 +213,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/mailgo@0.9.18/dist/mailgo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
   <script>$(function() {$('[data-toggle="tooltip"]').tooltip()})</script>
   </body>
 </html>
