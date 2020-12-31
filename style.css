@@ -207,8 +207,73 @@ details > summary {
 
 div.post ul,
 details > ul {
-  line-height: 1.5rem;
+  line-height: 2rem;
   margin-bottom: 1.25rem;
+}
+
+/* styling notes */
+div.notes {
+  margin-top: 2.5rem;
+}
+
+div.notes > details {
+  font-size: 85%;
+}
+
+details > summary::-webkit-details-marker {
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+}
+
+div.notes > details > summary {
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  padding: 6px 6px 3px 6px;
+  border-radius: 4px;
+}
+
+div.notes > details:hover > summary {
+  background-color: #f8f8f8;
+}
+
+div.notes > details > div.alert-secondary {
+  font-size: 95%;
+  padding: 1rem;
+  margin: 0.5rem 1rem 0 0.5rem;
+  background-color: #f5f2f0;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+
+div.notes > details > p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+div.notes > details > ul {
+  line-height: 1.65rem;
+  padding-left: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+div.notes > details > ul > li > ul {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+div.notes a:link,
+div.notes a:visited {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(55, 53, 47, 0.4);
+  color: rgba(55, 53, 47, 1);
+  opacity: 0.7;
+}
+
+div.notes a:hover {
+  text-decoration-color: rgba(55, 53, 47, 0.8);
+  opacity: 1;
 }
 
 /* styling footer */
