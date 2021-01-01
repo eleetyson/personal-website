@@ -7,6 +7,7 @@
 html,
 body {
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 main {
@@ -221,19 +222,31 @@ div.notes > details {
 }
 
 details > summary::-webkit-details-marker {
-  font-size: 0.875rem;
-  margin-right: 0.5rem;
+  display: none;
+}
+
+details > summary::after {
+  content: "+";
+  float: right;
+  margin-right: 3px;
 }
 
 div.notes > details > summary {
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
-  padding: 6px 6px 3px 6px;
+  padding: 6px 6px 5px 6px;
   border-radius: 4px;
+  width: 98%;
+  transition: 0.1s ease-in-out;
 }
 
 div.notes > details:hover > summary {
   background-color: #f8f8f8;
+}
+
+details[open] > summary::after {
+  content: "-";
+  margin-right: 5px;
 }
 
 div.notes > details > div.alert-secondary {
