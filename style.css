@@ -201,6 +201,11 @@ code {
   background-color: rgba(55, 53, 47, 0.05);
 }
 
+div.post > ul {
+  line-height: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 div.post > details > summary {
   outline: none;
   padding-bottom: 0.5rem;
@@ -208,12 +213,6 @@ div.post > details > summary {
 
 div.post > details > ul {
   line-height: 1.5rem;
-}
-
-div.post ul,
-details > ul {
-  line-height: 2rem;
-  margin-bottom: 1.25rem;
 }
 
 /* styling notes */
