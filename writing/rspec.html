@@ -40,12 +40,12 @@
         </ul>
         <p>This was the simple structure we built out for our JavaScript solution and corresponding test cases. </p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fcae8a42-aa09-40b8-a07b-7070ebff6af6/jestTests.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T152427Z&X-Amz-Expires=86400&X-Amz-Signature=32b1762fb6e3d74a349797e3ab4997112a4f98b4d9d3834276642bf165920946&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22jestTests.png%22" class="w-100" alt="Previous post test output">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fcae8a42-aa09-40b8-a07b-7070ebff6af6/jestTests.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185836Z&X-Amz-Expires=86400&X-Amz-Signature=3ded26fed48350a120081c2722b733871f8d06667f61cb7e9a24b65a67e29389&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22jestTests.png%22" class="w-100" alt="Previous post test output">
         </figure>
         <br>
         <p>Using a similar structure, we're going to solve that same problem but with Ruby and RSpec test coverage instead.</p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f61bb8c4-acae-4fa2-bfd9-5df0b31dcd8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T152629Z&X-Amz-Expires=86400&X-Amz-Signature=c36f087280e62b26c36d5f8add1870c127c39907c732b4c683a2be79130d2b88&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Preview RSpec test output">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f61bb8c4-acae-4fa2-bfd9-5df0b31dcd8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185912Z&X-Amz-Expires=86400&X-Amz-Signature=0cb39af5a3f61fecd5876dd0a0536005499ba5df8ad6490bff1e3839e56340b5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Preview RSpec test output">
         </figure>
         <br>
         <p>Like Jest is for JavaScript, RSpec is a popular testing framework for applications written in Ruby. To get started, we'll run <code>rspec --init</code> from our top-level directory.</p>
@@ -61,7 +61,7 @@ rspec --init
 --format documentation # adding this to display test descriptions upon execution
         </code></pre>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ea0ac3c-7697-4312-a5fe-1882a43e395f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T153727Z&X-Amz-Expires=86400&X-Amz-Signature=2a80555524a8513319e5e923549da3a8c77f0e8e99f457be0502474b7134b206&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="RSpec tests without context">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ea0ac3c-7697-4312-a5fe-1882a43e395f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185934Z&X-Amz-Expires=86400&X-Amz-Signature=8ecd1232282da579db055e56724e5b862e414795fbef2adaaa427acaec5d8b02&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="RSpec tests without context">
           <figcaption class="figure-caption">This is our test output if we don't include <code>--format documentation</code> in <code>.rspec</code></figcaption>
         </figure>
         <br>
@@ -99,7 +99,7 @@ end
         <p>Those first two lines are pretty straightforward: we're just loading a helper for our tests and then the file with our solution code.</p>
         <p>The <code>describe</code> method nests related tests in an 'example group'. Whatever argument we pass to <code>describe</code> will ultimately appear as a header in our terminal upon test execution.</p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/394c6bf4-3097-4da1-ad86-b381cbdae3cb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T154300Z&X-Amz-Expires=86400&X-Amz-Signature=acd6c195e8c24e7e48020adc19103e6890b2437f5ae8beb8ab88bdc53f31324a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Example test output using 'describe'">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/394c6bf4-3097-4da1-ad86-b381cbdae3cb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185952Z&X-Amz-Expires=86400&X-Amz-Signature=fa55c73ba990c4ec17d3c0b916840b50eedfa4d9d8d30a22fac247cf62cf68df&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Example test output using 'describe'">
           <figcaption class="figure-caption">a quick note: <code>describe 'match substrings' do</code> is equivalent to <code>describe('match substrings') do</code></figcaption>
         </figure>
         <br>
@@ -169,11 +169,11 @@ expect(test.match('te', 'test'))
 rspec matched-substrings-rb/matched_substrings_spec.rb
         </code></pre>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7c529e29-034c-4bfd-92cb-784696f15e85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T155219Z&X-Amz-Expires=86400&X-Amz-Signature=bd1534eb821916a137dd407c617cbdaa89316d5fc2d438973506390edb15a9f3&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 400px; width: 85%;" alt="failing test cases">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7c529e29-034c-4bfd-92cb-784696f15e85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T190012Z&X-Amz-Expires=86400&X-Amz-Signature=a9e19b8de0cf3aa65cdf5d303bbf5ec6b6bc01a87e571043eb7220e847697555&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 400px; width: 85%;" alt="failing test cases">
           <figcaption class="figure-caption">red for failed test cases</code></figcaption>
         </figure>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/678365e1-187d-4e23-a142-67b3c6957d6c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201229%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201229T155515Z&X-Amz-Expires=86400&X-Amz-Signature=ec9bcca9d3de3c0986b50354f3625d66577112988279e16a262cd0b1a6a047de&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 250px; width: 70%;" alt="passing test cases">
+          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/678365e1-187d-4e23-a142-67b3c6957d6c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T190029Z&X-Amz-Expires=86400&X-Amz-Signature=22b963456d09db4c8ec745c19309fd25129828f2749b706b6ed98516375e884c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 250px; width: 70%;" alt="passing test cases">
           <figcaption class="figure-caption">green means we're all good</code></figcaption>
         </figure>
         <br>

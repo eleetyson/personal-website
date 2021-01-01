@@ -201,9 +201,13 @@ code {
   background-color: rgba(55, 53, 47, 0.05);
 }
 
-details > summary {
+div.post > details > summary {
   outline: none;
   padding-bottom: 0.5rem;
+}
+
+div.post > details > ul {
+  line-height: 1.5rem;
 }
 
 div.post ul,
@@ -221,11 +225,11 @@ div.notes > details {
   font-size: 85%;
 }
 
-details > summary::-webkit-details-marker {
+div.notes > details > summary::-webkit-details-marker {
   display: none;
 }
 
-details > summary::after {
+div.notes > details > summary::after {
   content: "+";
   float: right;
   margin-right: 3px;
@@ -244,7 +248,7 @@ div.notes > details:hover > summary {
   background-color: #f8f8f8;
 }
 
-details[open] > summary::after {
+div.notes > details[open] > summary::after {
   content: "-";
   margin-right: 5px;
 }
