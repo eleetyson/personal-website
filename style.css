@@ -235,9 +235,9 @@ div.notes > details > summary::after {
 }
 
 div.notes > details > summary {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: 'Inter', sans-serif;
-  padding: 6px 6px 5px 6px;
+  padding: 8px 6px;
   border-radius: 4px;
   width: 98%;
   transition: 0.1s ease-in-out;

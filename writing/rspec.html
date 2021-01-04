@@ -41,12 +41,12 @@
         </ul>
         <p>This was the simple structure we built out for our JavaScript solution and corresponding test cases. </p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fcae8a42-aa09-40b8-a07b-7070ebff6af6/jestTests.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185836Z&X-Amz-Expires=86400&X-Amz-Signature=3ded26fed48350a120081c2722b733871f8d06667f61cb7e9a24b65a67e29389&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22jestTests.png%22" class="w-100" alt="Previous post test output">
+          <img src="../img/jest/jest-test-output.png" class="w-100" alt="Jest test output">
         </figure>
         <br>
         <p>Using a similar structure, we're going to solve that same problem but with Ruby and RSpec test coverage instead.</p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f61bb8c4-acae-4fa2-bfd9-5df0b31dcd8c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185912Z&X-Amz-Expires=86400&X-Amz-Signature=0cb39af5a3f61fecd5876dd0a0536005499ba5df8ad6490bff1e3839e56340b5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Preview RSpec test output">
+          <img src="../img/rspec/rspec-test-output.png" class="w-100" alt="RSpec test output">
         </figure>
         <br>
         <p>Like Jest is for JavaScript, RSpec is a popular testing framework for applications written in Ruby. To get started, we'll run <code>rspec --init</code> from our top-level directory.</p>
@@ -62,7 +62,7 @@ rspec --init
 --format documentation # adding this to display test descriptions upon execution
         </code></pre>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4ea0ac3c-7697-4312-a5fe-1882a43e395f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185934Z&X-Amz-Expires=86400&X-Amz-Signature=8ecd1232282da579db055e56724e5b862e414795fbef2adaaa427acaec5d8b02&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="RSpec tests without context">
+          <img src="../img/rspec/rspec-output-no-context.png" class="w-100" alt="RSpec tests without context">
           <figcaption class="figure-caption">This is our test output if we don't include <code>--format documentation</code> in <code>.rspec</code></figcaption>
         </figure>
         <br>
@@ -100,7 +100,7 @@ end
         <p>Those first two lines are pretty straightforward: we're just loading a helper for our tests and then the file with our solution code.</p>
         <p>The <code>describe</code> method nests related tests in an 'example group'. Whatever argument we pass to <code>describe</code> will ultimately appear as a header in our terminal upon test execution.</p>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/394c6bf4-3097-4da1-ad86-b381cbdae3cb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T185952Z&X-Amz-Expires=86400&X-Amz-Signature=fa55c73ba990c4ec17d3c0b916840b50eedfa4d9d8d30a22fac247cf62cf68df&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" class="w-100" alt="Example test output using 'describe'">
+          <img src="../img/rspec/rspec-test-output.png" class="w-100" alt="RSpec test output using 'describe'">
           <figcaption class="figure-caption">a quick note: <code>describe 'match substrings' do</code> is equivalent to <code>describe('match substrings') do</code></figcaption>
         </figure>
         <br>
@@ -170,11 +170,11 @@ expect(test.match('te', 'test'))
 rspec matched-substrings-rb/matched_substrings_spec.rb
         </code></pre>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7c529e29-034c-4bfd-92cb-784696f15e85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T190012Z&X-Amz-Expires=86400&X-Amz-Signature=a9e19b8de0cf3aa65cdf5d303bbf5ec6b6bc01a87e571043eb7220e847697555&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 400px; width: 85%;" alt="failing test cases">
-          <figcaption class="figure-caption">red for failed test cases</code></figcaption>
+          <img src="../img/rspec/failing-tests.png" style="height: 350px; width: 85%;" alt="failing test cases">
+          <figcaption class="figure-caption">red for failing test cases</code></figcaption>
         </figure>
         <figure>
-          <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/678365e1-187d-4e23-a142-67b3c6957d6c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210101%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210101T190029Z&X-Amz-Expires=86400&X-Amz-Signature=22b963456d09db4c8ec745c19309fd25129828f2749b706b6ed98516375e884c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" style="height: 250px; width: 70%;" alt="passing test cases">
+          <img src="../img/rspec/passing-tests.png" style="height: 250px; width: 70%;" alt="passing test cases">
           <figcaption class="figure-caption">green means we're all good</code></figcaption>
         </figure>
         <br>
