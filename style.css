@@ -34,21 +34,21 @@ a.nav-link:visited {
 }
 
 /* fading out siblings on nav link hover */
-.navbar:hover a:not(:hover),
-.navbar:focus-within a:not(:focus) {
-  opacity: 0.6;
-}
-
-.navbar:hover {
-  opacity: 1;
-}
-
 .navbar {
   pointer-events: none;
 }
 
 .navbar > a {
   pointer-events: auto;
+}
+
+.navbar:hover {
+  opacity: 1;
+}
+
+.navbar:hover a:not(:hover),
+.navbar:focus-within a:not(:focus) {
+  opacity: 0.6;
 }
 
 a.nav-link:active {
@@ -122,6 +122,15 @@ span.date {
 
 .card:hover {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px, rgba(0, 0, 0, 0.4) 0px 1px 2px;
+}
+
+.card > img {
+  opacity: 0.75;
+  transition: 0.2s ease-in-out;
+}
+
+.card:hover > img {
+  opacity: 1;
 }
 
 /* styling writing */
@@ -299,7 +308,28 @@ div.notes a:hover {
   width: 100%;
 }
 
-footer a:hover {
+footer,
+footer.sticky-footer > div.container {
+  pointer-events: none;
+}
+
+footer > a,
+footer > a:visited,
+footer.sticky-footer > div.container > a,
+footer.sticky-footer > div.container > a:visited {
+  pointer-events: auto;
+  transition: 0.3s ease-in-out;
+}
+
+footer:hover,
+footer.sticky-footer > div.container:hover {
+  opacity: 1;
+}
+
+footer:hover a:not(:hover),
+footer:focus-within a:not(:focus),
+footer.sticky-footer > div.container:hover a:not(:hover),
+footer.sticky-footer > div.container:focus-within a:not(:focus) {
   opacity: 0.5;
   text-decoration: none;
 }
