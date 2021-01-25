@@ -83,6 +83,7 @@ end
 rake db:create RAILS_ENV=development
 rake db:migrate
         </code></pre>
+        <br>
         <p>This is a good time to connect to Heroku; the Heroku URL will help with accessing the Twitter API. We'll add a simple route along with its corresponding controller action and view, clean up our <code>database.yml</code> file, and deploy what we have so far to ensure everything is working properly.</p>
         <pre><code class="lang-rb">
 # liked/config/routes.rb - adding a route
@@ -130,6 +131,7 @@ heroku create liked-it # create a Heroku app
 git push heroku main # deploy Rails app to Heroku
 heroku run rake db:migrate # migrate the database to Heroku
         </code></pre>
+        <br>
         <p>I recommend <a href="https://devcenter.heroku.com/articles/getting-started-with-rails5"  target="_blank">Heroku's documentation</a> for troubleshooting issues with any of the above.</p>
         <p>Finally, we'll add a link on the homepage to a Twitter-hosted login page. This link won't function properly until we set up the application in Twitter's developer portal.</p>
         <pre><code class="lang-erb">
@@ -145,6 +147,7 @@ heroku run rake db:migrate # migrate the database to Heroku
 TWITTER_API_KEY=yourkeyhere
 TWITTER_API_SECRET=yoursecrethere
         </code></pre>
+        <br>
         <p>The only section we'll tweak is <em>Authentication settings</em>. In it, we need to toggle on 'Enable 3-legged OAuth' before adding the required 'Website URL' and 'Callback URLs'.</p>
         <p> 'Website URL' must be the Heroku URL we created earlier (<code>https://...</code> and not <code>http://...</code>), using localhost won't work.</p>
         <p>Upon signing into their Twitter account, users are redirected back to our application — specifically to these 'Callback URLs'. 'Callback URLs' is where we'll include routes for testing locally and in production on Heroku. </p>
@@ -160,6 +163,7 @@ https://your-heroku-url-here/auth/twitter/callback
         <figure>
           <img src="../img/twitter-auth/twitter-dev-portal-settings.png" class="w-100" style="height: 325px;" alt="Twitter dev portal settings">
         </figure>
+        <br>
         <p>In part 2 (working on it!), we'll walk through the remainder of this process: configuring OmniAuth, handling the Twitter API response, creating &amp; storing user records in the database, and allowing users to log out too.</p>
       </div>
     </main>
