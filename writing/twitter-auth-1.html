@@ -133,7 +133,7 @@ heroku run rake db:migrate # migrate the database to Heroku
         </code></pre>
         <br>
         <p>I recommend <a href="https://devcenter.heroku.com/articles/getting-started-with-rails5"  target="_blank">Heroku's documentation</a> for troubleshooting issues with any of the above.</p>
-        <p>Finally, we'll add a link on the homepage to a Twitter-hosted login page. This link won't function properly until we set up the application in Twitter's developer portal.</p>
+        <p>Finally, we'll add a link on the homepage to a Twitter-hosted login page. This link won't function properly until we set up OmniAuth and our Twitter developer portal.</p>
         <pre><code class="lang-erb">
 # liked/app/views/users/show.erb
 &lt;%= button_to "/auth/twitter", <span class="hljs-symbol">method: :get %&gt;
@@ -141,7 +141,7 @@ heroku run rake db:migrate # migrate the database to Heroku
         <hr class="divider">
         <h5>Configuring the Twitter developer portal</h5>
         <p>Either log into your Twitter developer portal or <a href="https://developer.twitter.com/en/apply/user.html"  target="_blank">apply for an account</a>.</p>
-        <p>In the developer portal, we'll create an app and copy over the API key &amp; API secret key to a <code>.env</code> file, before editing the app's settings.</p>
+        <p>Add the <code>dotenv-rails</code> gem to the Gemfile and create a <code>.env</code> file at the root of the project directory. Back in the Twitter developer portal, we'll create an app and copy over the API key &amp; API secret key to this <code>.env</code> file, before editing the app's settings.</p>
         <pre><code class="lang-atom">
 # liked/.env - ensure this is included in your .gitignore file!
 TWITTER_API_KEY=yourkeyhere
