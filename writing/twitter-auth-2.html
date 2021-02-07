@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <link rel="icon" href="../img/favicon.png" type="text/css">
-    <meta name="viewport" content="width=device-width", initial-scale=1, shrink-to-fit=no>
+    <meta name="viewport" content="width=device-width" initial-scale=1, shrink-to-fit=no>
     <meta name="description" content="You found Ethan Lee-Tyson.">
-    <title>Twitter auth in Rails (1/2)</title>
+    <title>Twitter auth in Rails (2/2)</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="../style.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"/>
@@ -26,145 +26,186 @@
         <br><br>
 
         <h1>🆔</h1>
-        <h3>Twitter auth in Rails (1/2)</h3>
+        <h3>Twitter auth in Rails (2/2)</h3>
         <em class="description">on programming</em><br>
-        <em class="updated">last updated 1/24/21</em>
+        <em class="updated">last updated 2/7/21</em>
         <br><br>
 
-        <h5>Intro</h5>
-        <p>This is the first half of a tutorial for using an OmniAuth strategy to implement user authentication with Twitter in a Rails app.</p>
-        <p>If you're allergic to jargon, that just means allowing users to log in with their Twitter account. No need for yet another password.</p>
-        <p>It's also interesting because your application can then access information associated with the user's Twitter account: follows, followers, likes, lists — pretty much everything except bookmarks.</p>
-        <p>Here is a <a href="http://sign-in-with-twitter.herokuapp.com"  target="_blank">simple example</a> of what we're working towards.</p>
-        <p>I recommend testing out the example linked above, reading my summary below, and maybe also watching a <a href="http://railscasts.com/episodes/241-simple-omniauth-revised"  target="_blank">quick video</a> before trying to work through this entire tutorial.</p>
+        <p>In <a href="./twitter-auth-1">part 1</a>, we finished up by tweaking settings in the Twitter developer portal. Our homepage link and Twitter-hosted login don&#39;t work quite yet; we need to implement OmniAuth first.</p>
         <hr class="divider">
-        <h5>Summary</h5>
-        <ul>
-          <li>user visits homepage and clicks sign on button</li>
-          <li>user is redirected to Twitter-hosted page to log into their Twitter account</li>
-          <li>a request is sent to Twitter's servers which respond with details for the user's account</li>
-          <li>with user's account details, a user record is retrieved from or created in your database</li>
-          <li>details related to that user record are stored in the session</li>
-          <li>user is redirected to a different page</li>
-          <li>user eventually clicks sign out button, the session is cleared, and they're redirected</li>
-        </ul>
-        <hr class="divider">
-        <h5>Stubbing out a backend and homepage</h5>
-        <p>So you run <code>rails new &lt;app_name&gt;</code> or lean on <a href="http://railsnew.io"  target="_blank">railsnew.io</a> to create the skeleton for your application. Maybe you also <a href="https://yongnicholaskim.medium.com/ruby-on-rails-resource-generator-instant-full-stack-mvc-framework-crud-not-included-4967b4d3e3bb"  target="_blank">generate resources</a> and add basic associations to the models, before migrating your database.</p>
-        <p>In short, we'll need a Rails app connected to a Postgres database for storing user information. I've included some commands here that I might use in setting this up:</p>
-        <pre><code class="lang-atom">
-# creating the Rails app
-rails new liked -d postgresql
-
-# generating models and controllers for three basic resources
-rails g resource User uid:string name:string handle:string
-rails g resource Follow uid:string name:string handle:string user_id:integer
-rails g resource Like tid:string url:string follow_id:integer
-        </code></pre>
+        <h5 id="configuring-omniauth">Configuring OmniAuth</h5>
+        <p>OmniAuth is an authentication system that serves as middleware.</p>
+        <p>It sits between our application and external providers, enabling users to log into our application with an existing account on Twitter, Google, or other popular platforms.</p>
+        <p>The <code>omniauth</code> & <code>omniauth-twitter</code> gems are required for this, and I recommend adding the <code>twitter</code> gem (more on this <a href="https://github.com/sferik/twitter" target="_blank">here</a>) to simplify interactions with the Twitter API after logging in.</p>
         <pre><code class="lang-rb">
-# adding associations to the models
-# liked/app/models/user.rb
-class User &lt; ApplicationRecord
-  has_many :follows
-end
-
-# liked/app/models/follow.rb
-class Follow &lt; ApplicationRecord
-  belongs_to :user
-  has_many :likes
-end
-
-# liked/app/models/like.rb
-class Like &lt; ApplicationRecord
-  belongs_to :follow
-end
-
-# migrating the database
-rake db:create RAILS_ENV=development
-rake db:migrate
+# liked/Gemfile
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'twitter'
+...
         </code></pre>
         <br>
-        <p>This is a good time to connect to Heroku; the Heroku URL will help with accessing the Twitter API. We'll add a simple route along with its corresponding controller action and view, clean up our <code>database.yml</code> file, and deploy what we have so far to ensure everything is working properly.</p>
+        <p>So that our homepage link actually redirects to a Twitter login page, we'll add an <code>omniauth.rb</code> file in <code>config/initializers</code> with the following block:</p>
         <pre><code class="lang-rb">
-# liked/config/routes.rb - adding a route
+# liked/config/initializers/omniauth.rb
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, ENV['TWITTER_API_KEY'], ENV['TWITTER_API_SECRET']
+end
+        </code></pre>
+        <pre><code class="lang-erb">
+# liked/app/views/users/show.erb
+<%= button_to "/auth/twitter", method: :get %>
+        </code></pre>
+        <br>
+        <p>Upon attempted logins, Twitter's servers respond with information for the user's Twitter account via a GET request to the callback URL we set in our developer portal (at the end of <a href="./twitter-auth-1">part 1</a>).</p>
+        <p>We'll add two callback routes to handle responses for both successful and unsuccessful attempts.</p>
+        <pre><code class="lang-rb">
+# liked/config/routes.rb
 Rails.application.routes.draw do
   root 'users#home'
+  get '/auth/failure' => '/'
+  get '/auth/twitter/callback' => 'sessions#create'
 end
+        </code></pre>
+        <br>
+        <p>Unsuccessful logins will hit that 2nd route and direct users back to our root route: the homepage.</p>
+        <p>The 3rd route will handle responses for successful logins. GET requests to the callback URL <code>auth/twitter/callback</code> will be matched to the <code>sessions</code> controller's <code>create</code> action.</p>
+        <p>For context, take a look at an <a href="https://github.com/arunagw/omniauth-twitter#authentication-hash" target="_blank">example response</a> from the <code>omniauth-twitter</code> documentation.</p>
+        <hr class="divider">
+        <h5 id="handling-the-twitter-api-response">Handling the Twitter API response</h5>
+        <p>We can process responses in the <code>sessions#create</code> controller action or as I've done below, move that logic into a model as a dedicated method .</p>
+        <p>The <code>sessions#create</code> action first invokes a <code>User</code> class method, passing it the response. To assist in parsing this response hash, I also added a simple helper method.</p>
+        <pre><code class="lang-rb">
+# liked/app/controllers/sessions_controller.rb
+class SessionsController < ApplicationController
 
-# liked/app/controllers/users_controller.rb - adding a controller action
-class UsersController &lt; ApplicationController
-  def home
+# GET /auth/twitter/callback
+  def create
+    user = User.from_omniauth(auth)
+  end
+
+  private
+
+  # helper method to assist in parsing omniauth responses
+  def auth
+    request.env['omniauth.auth']
+  end
+end
+        </code></pre>
+        <br>
+        <p>In this <code>User</code> class method, we need to find the existing account associated with this Twitter account or create a new account altogether. We'll do so with the value for the <code>uid</code> property, a unique identifier for every Twitter account, in the response.</p>
+        <p><code>#find_or_create_by</code> is a handy ActiveRecord method for this sort of scenario. When a record is found with the given <code>uid</code> attribute, the block is skipped and that record is returned.</p>
+        <p>When a record is not found — meaning the authenticating user has not logged into our application with that Twitter account before — the block is invoked to create and return a new user record. </p>
+        <pre><code class="lang-rb">
+# liked/app/models/user.rb
+class User < ApplicationRecord
+  validates :name, presence: true
+  validates :handle, presence: true, uniqueness: true
+  validates :token, presence: true, uniqueness: true
+  validates :secret, presence: true, uniqueness: true
+
+# finds existing user or creates new user
+  def self.from_omniauth(auth)
+    self.find_or_create_by(uid: auth['uid']) do |u|
+      u.name = auth[:info][:name]
+      u.handle = auth[:info][:nickname]
+      u.token = auth[:credentials][:token]
+      u.secret = auth[:credentials][:secret]
+    end
+  end
+end
+        </code></pre>
+        <br>
+        <p>The access <code>token</code> and <code>secret</code> can be used to make requests to the Twitter API retrieving the user's follows, likes, and so on. Like <code>uid</code>, they're unique to each Twitter account and do not expire.</p>
+        <p>So <code>.from_omniauth</code> returns a user record for the current user. We'll then store attributes for that record in the session hash (more on this <a href="https://www.theodinproject.com/courses/ruby-on-rails/lessons/sessions-cookies-and-authentication" target="_blank">here</a>) so the user doesn't have to log in again.</p>
+        <pre><code class="lang-rb">
+# liked/app/controllers/sessions_controller.rb
+class SessionsController < ApplicationController
+
+# GET /auth/twitter/callback
+  def create
+    user = User.from_omniauth(auth)
+    session[:user_id] = user.id
+    session[:token] = user.token
+    session[:secret] = user.secret
+    redirect_to user_path(user)
+  end
+
+  private
+
+  # helper method to simplify parsing omniauth response
+  def auth
+    request.env['omniauth.auth']
+  end
+end
+        </code></pre>
+        <br>
+        <p>Where to redirect the user after this is completely up to you. At a minimum, you'll probably need another route, controller action, and view.</p>
+        <hr class="divider">
+        <h5 id="conclusion">Conclusion</h5>
+        <p>If you've read this far, I have a pair of final recommendations:</p>
+        <ul>
+          <li>add a logout link and corresponding route / controller action</li>
+          <li>use helper methods to verify that users have logged in or out</li>
+        </ul>
+        <p>I suggest taking care of that first piece immediately after adding the login button, route, and controller action. Here's an example:</p>
+        <pre><code class="lang-rb">
+# liked/config/routes.rb
+Rails.application.routes.draw do
+  root 'users#home'
+  get '/auth/failure' => '/'
+  get '/auth/twitter/callback' => 'sessions#create'
+  post '/logout' => 'sessions#destroy' # logout route
+  resources :users, only: [:show]
+end
+        </code></pre>
+        <pre><code class="lang-rb">
+# liked/app/controllers/sessions_controller.rb
+class SessionsController < ApplicationController
+
+# GET /auth/twitter/callback
+  def create
+    user = User.from_omniauth(auth)
+    session[:user_id] = user.id
+    session[:token] = user.token
+    session[:secret] = user.secret
+    redirect_to user_path(user)
+  end
+
+# POST /logout - logout controller action
+# clears the session, 'logging out' the user and redirecting them
+  def destroy
+    session.clear
+    redirect_to root_path
+  end
+
+  private
+
+  def auth
+    request.env['omniauth.auth']
   end
 end
         </code></pre>
         <pre><code class="lang-erb">
-# liked/app/views/users/show.erb - adding a view
-&lt;p&gt;put anything here to verify nothing is already broken&lt;/p&gt;
-        </code></pre>
-        <pre><code class="lang-atom">
-# liked/config/database.yml - need to configure this for Heroku deploy
-default: &amp;default
-  adapter: postgresql
-  encoding: unicode
-  pool: &lt;%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %&gt;
-
-development:
-  &lt;&lt;: *default
-  database: liked_development
-
-test:
-  &lt;&lt;: *default
-  database: liked_test
-
-production:
-  &lt;&lt;: *default
-  url: &lt;%= ENV['DATABASE_URL'] %&gt;
-  username: admin
-        </code></pre>
-        <pre><code class="lang-atom">
-# using the Heroku CLI tool to deploy
-heroku login # log into Heroku
-git init
-git add .
-git commit -m "first commit"
-heroku create liked-it # create a Heroku app
-git push heroku main # deploy Rails app to Heroku
-heroku run rake db:migrate # migrate the database to Heroku
+  # liked/app/views/layouts/application.html.erb - layout with logout link
+  ...
+  <%= link_to "Sign out", logout_path, method: :post %>
+  ...
         </code></pre>
         <br>
-        <p>I recommend <a href="https://devcenter.heroku.com/articles/getting-started-with-rails5" target="_blank">Heroku's documentation</a> for troubleshooting issues with any of the above.</p>
-        <p>Finally, we'll add a link on the homepage to a Twitter-hosted login page. This link won't function properly until we set up OmniAuth and our Twitter developer portal.</p>
-        <pre><code class="lang-erb">
-# liked/app/views/users/show.erb
-&lt;%= button_to "/auth/twitter", <span class="hljs-symbol">method: :get %&gt;
-        </code></pre>
-        <hr class="divider">
-        <h5>Configuring the Twitter developer portal</h5>
-        <p>Either log into your Twitter developer portal or <a href="https://developer.twitter.com/en/apply/user.html"  target="_blank">apply for an account</a>.</p>
-        <p>Add the <code>dotenv-rails</code> gem to the Gemfile and create a <code>.env</code> file at the root of the project directory. Back in the Twitter developer portal, we'll create an app and copy over the API key &amp; API secret key to this <code>.env</code> file, before editing the app's settings.</p>
-        <pre><code class="lang-atom">
-# liked/.env - ensure this is included in your .gitignore file!
-TWITTER_API_KEY=yourkeyhere
-TWITTER_API_SECRET=yoursecrethere
-        </code></pre>
+        <p>As for those helper methods, here are <a href="https://github.com/eleetyson/liked/blob/main/app/controllers/application_controller.rb" target="_blank">some examples</a>. They can be used to simplify controller logic, such as filters for controller actions.</p>
+        <p>I'm happy to try and answer any questions you might have related to implementing an OmniAuth strategy for Twitter in your Rails app (either here or in <a href="./twitter-auth-1">part 1</a>). Please just <a href="mailto:eleetyson@gmail.com" target="_blank">email me</a>.</p>
+        <p>I've also included some links below that helped me with this process.</p>
         <br>
-        <p>The only section we'll tweak is <em>Authentication settings</em>. In it, we need to toggle on 'Enable 3-legged OAuth' before adding the required 'Website URL' and 'Callback URLs'.</p>
-        <p> 'Website URL' must be the Heroku URL we created earlier (<code>https://...</code> and not <code>http://...</code>), using localhost won't work.</p>
-        <p>Upon signing into their Twitter account, users are redirected back to our application — specifically to these 'Callback URLs'. 'Callback URLs' is where we'll include routes for testing locally and in production on Heroku. </p>
-        <p>There were two Stack Overflow threads (<a href="https://stackoverflow.com/questions/50826742/omniauth-twitter-with-rails-5-stopped-working-oauthunauthorized-403-forbidden" target="_blank">here</a> and <a href="https://stackoverflow.com/questions/50560813/devise-oauth-twitter-oauthunauthorized-forbidden-403" target="_blank">here</a>) that helped me debug the 403 errors I eventually ran into. I suggest reading both threads and adding these six routes to 'Callback URLs'.</p>
-        <pre><code class="lang-atom">
-http://localhost:3000/auth/twitter
-http://localhost:3000/auth/twitter/callback
-http://127.0.0.1:3000/auth/twitter
-http://127.0.0.1:3000/auth/twitter/callback
-https://your-heroku-url-here/auth/twitter
-https://your-heroku-url-here/auth/twitter/callback
-        </code></pre>
-        <figure>
-          <img src="../img/twitter-auth/twitter-dev-portal-settings.png" class="w-100" style="height: 325px;" alt="Twitter dev portal settings">
-        </figure>
-        <br>
-        <p>In <a href="./twitter-auth-2">part 2</a>, we walk through the rest of this process: configuring OmniAuth, handling the Twitter API response, creating &amp; storing user records in the database, and allowing users to log out too.</p>
+        <details>
+          <summary>INSPIRATION</summary>
+            <ul>
+              <li><a href="http://railscasts.com/episodes/241-simple-omniauth-revised" target="_blank">#241 Simple Omniauth</a>, a video tutorial by Ryan Bates</li>
+              <li><a href="https://github.com/sferik/sign-in-with-twitter" target="_blank">sign-in-with twitter</a>, an example application by Erik Berlin</li>
+              <li><a href="https://github.com/arunagw/omniauth-twitter" target="_blank">omniauth-twitter</a>, a Ruby gem for implementing OmniAuth with Twitter</li>
+              <li><a href="https://github.com/sferik/twitter" target="_blank">twitter</a>, a Ruby gem for interacting with the Twitter API</li>
+            </ul>
+        </details>
       </div>
     </main>
 
