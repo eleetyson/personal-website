@@ -210,7 +210,8 @@ code {
   background-color: rgba(55, 53, 47, 0.05);
 }
 
-div.post > ul {
+div.post > ul,
+div.post > ol {
   line-height: 1.25rem;
   margin-bottom: 1.25rem;
 }
@@ -308,7 +309,7 @@ div.notes a:hover {
   width: 100%;
 }
 
-footer,
+/* footer,
 footer.sticky-footer > div.container {
   pointer-events: none;
 }
@@ -330,9 +331,9 @@ footer:hover a:not(:hover),
 footer:focus-within a:not(:focus),
 footer.sticky-footer > div.container:hover a:not(:hover),
 footer.sticky-footer > div.container:focus-within a:not(:focus) {
-  opacity: 0.5;
+  opacity: 0.8;
   text-decoration: none;
-}
+} */
 
 /* styling text highlight selection */
 ::selection {
